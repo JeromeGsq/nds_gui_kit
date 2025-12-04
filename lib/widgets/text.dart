@@ -10,9 +10,17 @@ class NDSText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(fontSize: 30, color: color),
+      style: TextStyle(
+        fontSize: 30,
+        color: color,
+        fontFamily: 'Nintendo-DS-BIOS',
+        decoration: TextDecoration.none,
+        fontWeight: FontWeight.w500,
+      ),
       textAlign: TextAlign.center,
-      textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
+      textHeightBehavior: const TextHeightBehavior(
+        applyHeightToFirstAscent: false,
+      ),
     );
   }
 }

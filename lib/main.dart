@@ -3,25 +3,24 @@ import 'package:flutter/services.dart';
 import 'package:nds_gui_kit/main_page.dart';
 
 const double scaleFactor = 5.625 / 2;
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  runApp(const MyApp());
+
+  runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SizedBox(width: 1920, height: 1080, child: TopScreen()),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+@pragma('vm:entry-point')
+void externalDisplayMain() {
+  runApp(
+    MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        fontFamily: 'Nintendo-DS-BIOS',
-      ),
-      home: MainPage(),
-    );
-  }
+      home: SizedBox(width: 1240, height: 1080, child: BottomScreen()),
+    ),
+  );
 }

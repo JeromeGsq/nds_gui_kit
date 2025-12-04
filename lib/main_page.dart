@@ -8,20 +8,6 @@ import 'package:nds_gui_kit/widgets/top_bar.dart';
 
 const pseudo = 'Hello';
 
-class MainPage extends StatelessWidget {
-  const MainPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.lightBlue,
-      body: Center(
-        child: SizedBox(width: 1920, height: 1080, child: TopScreen()),
-      ),
-    );
-  }
-}
-
 class TopScreen extends StatelessWidget {
   const TopScreen({super.key});
 

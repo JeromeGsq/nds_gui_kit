@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:nds_gui_kit/widgets/image_pp.dart';
 import 'package:battery_plus/battery_plus.dart';
 import 'package:nds_gui_kit/widgets/text.dart';
@@ -12,6 +11,7 @@ class NDSBattery extends StatefulWidget {
 }
 
 class NDSBatteryState extends State<NDSBattery> {
+  final _battery = Battery();
   int _batteryLevel = 100;
   Color _colorLevel = Colors.green;
 
@@ -21,13 +21,13 @@ class NDSBatteryState extends State<NDSBattery> {
 
     updateBatteryLevel();
 
-    Battery().onBatteryStateChanged.listen((state) {
+    _battery.onBatteryStateChanged.listen((state) {
       updateBatteryLevel();
     });
   }
 
   void updateBatteryLevel() async {
-    final batteryLevel = await Battery().batteryLevel;
+    final batteryLevel = await _battery.batteryLevel;
 
     setState(() {
       _batteryLevel = batteryLevel.toInt();
