@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:nds_gui_kit/widgets/image_pp.dart';
 import 'package:battery_plus/battery_plus.dart';
+import 'package:nds_gui_kit/widgets/text.dart';
 
 class NDSBattery extends StatefulWidget {
   const NDSBattery({super.key});
@@ -50,26 +52,33 @@ class NDSBatteryState extends State<NDSBattery> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      spacing: 6,
       children: [
-        Positioned(
-          left: 0,
-          child: Container(
-            color: _colorLevel,
-            height: 8,
-            width: 32 * _batteryLevel / 100,
-          ),
+        NDSText(text: '$_batteryLevel%'),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+              left: 0,
+              child: Container(
+                color: _colorLevel,
+                height: 8,
+                width: 32 * _batteryLevel / 100,
+              ),
+            ),
+            Positioned(
+              left: 0,
+              child: Container(
+                color: _colorLevel,
+                height: 16,
+                width: 26 * _batteryLevel / 100,
+              ),
+            ),
+            ImagePP('assets/images/battery.png'),
+          ],
         ),
-        Positioned(
-          left: 0,
-          child: Container(
-            color: _colorLevel,
-            height: 16,
-            width: 26 * _batteryLevel / 100,
-          ),
-        ),
-        ImagePP('assets/images/battery.png'),
       ],
     );
   }

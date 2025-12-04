@@ -10,7 +10,7 @@ class NDSText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(fontSize: 32, color: color),
+      style: TextStyle(fontSize: 30, color: color),
       textAlign: TextAlign.center,
       textHeightBehavior: TextHeightBehavior(applyHeightToFirstAscent: false),
     );

@@ -3,7 +3,6 @@ import 'package:nds_gui_kit/widgets/background_bottom.dart';
 import 'package:nds_gui_kit/widgets/background_top.dart';
 import 'package:nds_gui_kit/widgets/battery.dart';
 import 'package:nds_gui_kit/widgets/clock.dart';
-import 'package:nds_gui_kit/widgets/image_pp.dart';
 import 'package:nds_gui_kit/widgets/text.dart';
 import 'package:nds_gui_kit/widgets/top_bar.dart';
 
