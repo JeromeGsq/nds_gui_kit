@@ -37,6 +37,9 @@ dependencies:
   gap: ^3.0.1
   battery_plus: ^7.0.0
   external_display: ^0.4.2+1
+  shared_preferences: ^2.3.3
+  android_intent_plus: ^5.1.0
+  device_apps: ^2.2.0
 
 dev_dependencies:
   flutter_test:

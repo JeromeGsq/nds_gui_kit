@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:nds_gui_kit/main_page.dart';
+import 'package:nds_gui_kit/widgets/editable_pseudo.dart';
 import 'package:nds_gui_kit/widgets/image_pp.dart';
-import 'package:nds_gui_kit/widgets/text.dart';
 
 class NDSTopBar extends StatelessWidget {
   const NDSTopBar({super.key, this.children = const []});
@@ -22,10 +21,7 @@ class NDSTopBar extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: .only(top: 3),
-                  child: NDSText(text: pseudo),
-                ),
+                Padding(padding: .only(top: 3), child: NDSEditablePseudo()),
                 Spacer(),
                 // for each child, add a spacer
                 ...children.map(

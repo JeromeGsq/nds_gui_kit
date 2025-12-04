@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nds_gui_kit/widgets/background_bottom.dart';
+import 'package:nds_gui_kit/widgets/image_button.dart';
+import 'package:nds_gui_kit/widgets/buttons.dart';
 import 'package:nds_gui_kit/widgets/background_top.dart';
 import 'package:nds_gui_kit/widgets/battery.dart';
 import 'package:nds_gui_kit/widgets/calendar.dart';
 import 'package:nds_gui_kit/widgets/clock.dart';
 import 'package:nds_gui_kit/widgets/text.dart';
 import 'package:nds_gui_kit/widgets/top_bar.dart';
-
-const pseudo = 'Hello';
 
 class TopScreen extends StatelessWidget {
   const TopScreen({super.key});
@@ -49,6 +49,73 @@ class BottomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const NDSBackgroundBottom();
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        const NDSBackgroundBottom(),
+        Align(alignment: Alignment.bottomCenter, child: NDSSettingsButton()),
+        Align(alignment: Alignment.bottomRight, child: NDSMoreButton()),
+        Column(
+          spacing: 10,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                NDSImageButton(
+                  onTap: () {},
+                  child: Center(
+                    child: NDSText(
+                      text: 'Nintendo DS',
+                      color: Colors.black,
+                      extraBold: true,
+                      fontSize: 40,
+                    ),
+                  ),
+                ),
+                NDSImageButton(
+                  onTap: () {},
+                  child: Center(
+                    child: NDSText(
+                      text: 'GameBoy Advance',
+                      color: Colors.black,
+                      extraBold: true,
+                      fontSize: 40,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                NDSImageButton(
+                  onTap: () {},
+                  child: Center(
+                    child: NDSText(
+                      text: 'Nintendo Switch',
+                      color: Colors.black,
+                      extraBold: true,
+                      fontSize: 40,
+                    ),
+                  ),
+                ),
+                NDSImageButton(
+                  onTap: () {},
+                  child: Center(
+                    child: NDSText(
+                      text: 'GameBoy Color',
+                      color: Colors.black,
+                      extraBold: true,
+                      fontSize: 40,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }
