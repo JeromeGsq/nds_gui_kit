@@ -1,8 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:android_intent_plus/android_intent.dart';
-import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
+import 'package:installed_apps/app_info.dart';
+import 'package:installed_apps/installed_apps.dart';
 import 'package:nds_gui_kit/widgets/image_pp.dart';
 import 'package:nds_gui_kit/widgets/text.dart';
 
@@ -111,7 +112,7 @@ class NDSAppsBottomSheet extends StatefulWidget {
 }
 
 class _NDSAppsBottomSheetState extends State<NDSAppsBottomSheet> {
-  List<Application>? _apps;
+  List<AppInfo>? _apps;
   bool _loading = true;
 
   @override
@@ -121,22 +122,20 @@ class _NDSAppsBottomSheetState extends State<NDSAppsBottomSheet> {
   }
 
   Future<void> _loadApps() async {
-    final apps = await DeviceApps.getInstalledApplications(
-      includeAppIcons: true,
-      includeSystemApps: false,
-      onlyAppsWithLaunchIntent: true,
+    final apps = await InstalledApps.getInstalledApps(
+      true, // exclude system apps
+      true, // with icon
+      '', // package name prefix filter
     );
-    apps.sort(
-      (a, b) => a.appName.toLowerCase().compareTo(b.appName.toLowerCase()),
-    );
+    apps.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
     setState(() {
       _apps = apps;
       _loading = false;
     });
   }
 
-  void _launchApp(Application app) {
-    DeviceApps.openApp(app.packageName);
+  void _launchApp(AppInfo app) {
+    InstalledApps.startApp(app.packageName);
     Navigator.pop(context);
   }
 
@@ -225,8 +224,14 @@ class _NDSAppsBottomSheetState extends State<NDSAppsBottomSheet> {
   }
 
   Widget _buildAppsList() {
-    return ListView.builder(
+    return GridView.builder(
       padding: const EdgeInsets.all(16),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+        childAspectRatio: 0.75,
+      ),
       itemCount: _apps?.length ?? 0,
       itemBuilder: (context, index) {
         final app = _apps![index];
@@ -239,7 +244,7 @@ class _NDSAppsBottomSheetState extends State<NDSAppsBottomSheet> {
 class _NDSAppTile extends StatefulWidget {
   const _NDSAppTile({required this.app, required this.onTap});
 
-  final Application app;
+  final AppInfo app;
   final VoidCallback onTap;
 
   @override
@@ -251,10 +256,7 @@ class _NDSAppTileState extends State<_NDSAppTile> {
 
   @override
   Widget build(BuildContext context) {
-    final hasIcon = widget.app is ApplicationWithIcon;
-    final Uint8List? icon = hasIcon
-        ? (widget.app as ApplicationWithIcon).icon
-        : null;
+    final Uint8List? icon = widget.app.icon;
 
     return GestureDetector(
       onTapDown: (_) => setState(() => _isPressed = true),
@@ -262,8 +264,7 @@ class _NDSAppTileState extends State<_NDSAppTile> {
       onTapCancel: () => setState(() => _isPressed = false),
       onTap: widget.onTap,
       child: Container(
-        margin: const EdgeInsets.only(bottom: 8),
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: _isPressed ? NDSColors.backgroundDark : NDSColors.white,
           border: Border.all(color: NDSColors.border, width: 3),
@@ -272,44 +273,33 @@ class _NDSAppTileState extends State<_NDSAppTile> {
               : [
                   BoxShadow(
                     color: NDSColors.border.withValues(alpha: 0.5),
-                    offset: const Offset(4, 4),
+                    offset: const Offset(3, 3),
                     blurRadius: 0,
                   ),
                 ],
         ),
-        child: Row(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // App icon with NDS frame
             Container(
-              width: 64,
-              height: 64,
+              width: 56,
+              height: 56,
               decoration: BoxDecoration(
                 color: NDSColors.background,
                 border: Border.all(color: NDSColors.border, width: 2),
               ),
               child: icon != null
                   ? Image.memory(icon, fit: BoxFit.cover)
-                  : const Icon(Icons.apps, size: 40),
+                  : const Icon(Icons.apps, size: 32),
             ),
-            const SizedBox(width: 16),
-            // App name
-            Expanded(
+            const SizedBox(height: 6),
+            // App name below
+            Flexible(
               child: NDSText(
-                text: widget.app.appName,
+                text: widget.app.name,
                 color: Colors.black,
-                fontSize: 28,
-              ),
-            ),
-            // Arrow indicator
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: NDSColors.accent,
-                border: Border.all(color: NDSColors.border, width: 2),
-              ),
-              child: const Center(
-                child: NDSText(text: '>', color: Colors.white, fontSize: 20),
+                fontSize: 16,
               ),
             ),
           ],
