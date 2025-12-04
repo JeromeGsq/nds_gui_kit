@@ -93,12 +93,11 @@ class _ClockHand extends StatelessWidget {
   Widget build(BuildContext context) {
     return Transform.rotate(
       angle: angle,
-      child: Transform.translate(
-        offset: Offset(length * scaleFactor / 2, 0),
-        child: Container(
-          width: length * scaleFactor,
-          height: 2 * scaleFactor,
-          color: color,
+      child: Transform.scale(
+        scale: scaleFactor,
+        child: Transform.translate(
+          offset: Offset(length / 2, 0),
+          child: Container(width: length, height: 2, color: color),
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nds_gui_kit/widgets/background_bottom.dart';
 import 'package:nds_gui_kit/widgets/background_top.dart';
 import 'package:nds_gui_kit/widgets/battery.dart';
+import 'package:nds_gui_kit/widgets/calendar.dart';
 import 'package:nds_gui_kit/widgets/clock.dart';
 import 'package:nds_gui_kit/widgets/text.dart';
 import 'package:nds_gui_kit/widgets/top_bar.dart';
@@ -36,7 +37,8 @@ class TopScreen extends StatelessWidget {
         ),
 
         // Content
-        Positioned(left: 121, top: 74, child: const NDSClock()),
+        Positioned(left: 80, top: 113, child: const NDSClock()),
+        Positioned(right: 76, top: 72, child: const NDSCalendar()),
       ],
     );
   }

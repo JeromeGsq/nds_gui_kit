@@ -12,13 +12,13 @@ class NDSTopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 32,
+      height: 36,
       child: Stack(
         fit: StackFit.expand,
         children: [
           ImagePP('assets/images/top_bar_bg_1.png', repeat: ImageRepeat.repeat),
           Padding(
-            padding: const EdgeInsets.only(left: 8, right: 0),
+            padding: const EdgeInsets.only(left: 8, right: 0, bottom: 4),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

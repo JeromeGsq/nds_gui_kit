@@ -6,16 +6,18 @@ class ImagePP extends StatelessWidget {
     this.imagePath, {
     super.key,
     this.repeat = ImageRepeat.noRepeat,
+    this.scale,
   });
 
   final String imagePath;
   final ImageRepeat repeat;
+  final double? scale;
 
   @override
   Widget build(BuildContext context) {
     return Image.asset(
       imagePath,
-      scale: 1 / (scaleFactor),
+      scale: scale ?? 1 / (scaleFactor),
       isAntiAlias: false,
       filterQuality: FilterQuality.none,
       repeat: repeat,
