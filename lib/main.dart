@@ -17,7 +17,7 @@ void main() async {
     );
   }
 
-  runApp(const TopDisplayView());
+  runApp(const BottomDisplayView());
 }
 
 @pragma('vm:entry-point')
@@ -25,12 +25,7 @@ void externalDisplayMain() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
-  runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: BottomDisplayView(),
-    ),
-  );
+  runApp(BottomDisplayView());
 }
 
 class TopDisplayView extends StatelessWidget {
@@ -50,10 +45,13 @@ class BottomDisplayView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.lightBlue,
-      body: Center(
-        child: SizedBox(width: 1240, height: 1080, child: BottomScreen()),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.lightBlue,
+        body: Center(
+          child: SizedBox(width: 1240, height: 1080, child: BottomScreen()),
+        ),
       ),
     );
   }
