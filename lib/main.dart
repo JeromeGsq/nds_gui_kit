@@ -1,7 +1,8 @@
 import 'package:external_display/external_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nds_gui_kit/main_page.dart';
+import 'package:nds_gui_kit/pages/bottom/bottom.dart';
+import 'package:nds_gui_kit/pages/top/top.dart';
 
 const double scaleFactor = 5.625 / 2;
 
@@ -17,14 +18,14 @@ void main() async {
     );
   }
 
-  runApp(const BottomDisplayView());
+  runApp(const TopDisplayView());
 }
 
 @pragma('vm:entry-point')
-void externalDisplayMain() {
+void externalDisplayMain() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
+  await Future.delayed(const Duration(milliseconds: 500));
   runApp(BottomDisplayView());
 }
 
@@ -33,10 +34,7 @@ class TopDisplayView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SizedBox(width: 1920, height: 1080, child: TopScreen()),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: TopScreen());
   }
 }
 
@@ -47,12 +45,7 @@ class BottomDisplayView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.lightBlue,
-        body: Center(
-          child: SizedBox(width: 1240, height: 1080, child: BottomScreen()),
-        ),
-      ),
+      home: Scaffold(body: Center(child: BottomScreen())),
     );
   }
 }

@@ -31,7 +31,9 @@ class _NDSImageButtonState extends State<NDSImageButton> {
       onTap: widget.onTap,
       child: Stack(
         children: [
-          ImagePP(_isPressed ? widget.pressedImagePath : widget.imagePath),
+          ImagePP(
+            _isPressed ? widget.pressedImagePath : widget.imagePath,
+          ),
           if (widget.child != null) Positioned.fill(child: widget.child!),
         ],
       ),
