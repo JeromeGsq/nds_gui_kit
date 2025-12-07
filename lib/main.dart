@@ -35,7 +35,7 @@ class TopDisplayView extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Transform.scale(
-        scale: 2,
+        scale: 2.43,
         child: Center(
           child: SizedBox(width: 256, height: 192, child: TopScreen()),
         ),
@@ -51,8 +51,11 @@ class BottomDisplayView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Center(
-        child: SizedBox(width: 256, height: 192, child: BottomScreen()),
+      home: Transform.scale(
+        scale: 2.7775,
+        child: Center(
+          child: SizedBox(width: 256, height: 192, child: BottomScreen()),
+        ),
       ),
     );
   }

@@ -94,40 +94,17 @@ class _NDSFavoriteAppsViewState extends State<NDSFavoriteAppsView> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return Column(
-      spacing: 10,
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Stack(
+      alignment: Alignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _FavoriteButton(
-              config: _favorites[0],
-              onTap: () => _handleButtonTap(0),
-              onLongPress: () => _handleButtonLongPress(0),
-            ),
-            // _FavoriteButton(
-            //   config: _favorites[1],
-            //   onTap: () => _handleButtonTap(1),
-            //   onLongPress: () => _handleButtonLongPress(1),
-            // ),
-          ],
+        Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: _FavoriteButton(
+            config: _favorites[0],
+            onTap: () => _handleButtonTap(0),
+            onLongPress: () => _handleButtonLongPress(0),
+          ),
         ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //   children: [
-        //     _FavoriteButton(
-        //       config: _favorites[2],
-        //       onTap: () => _handleButtonTap(2),
-        //       onLongPress: () => _handleButtonLongPress(2),
-        //     ),
-        //     _FavoriteButton(
-        //       config: _favorites[3],
-        //       onTap: () => _handleButtonTap(3),
-        //       onLongPress: () => _handleButtonLongPress(3),
-        //     ),
-        //   ],
-        // ),
       ],
     );
   }

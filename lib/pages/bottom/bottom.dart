@@ -16,15 +16,29 @@ class BottomScreen extends StatelessWidget {
         extendBody: true,
         body: Stack(
           fit: StackFit.expand,
-          children: [const NDSBackgroundBottom(), _Body()],
-        ),
-        bottomNavigationBar: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            NDSLightButton(onTap: showOverlay),
-            NDSSettingsButton(),
-            NDSMoreButton(),
+            Positioned(
+              top: 0,
+              left: 0,
+              child: SizedBox(
+                height: 192,
+                width: 256,
+                child: const NDSBackgroundBottom(),
+              ),
+            ),
+            _Body(),
           ],
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 11.75),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              NDSLightButton(onTap: showOverlay),
+              NDSSettingsButton(),
+              NDSMoreButton(),
+            ],
+          ),
         ),
       ),
     );

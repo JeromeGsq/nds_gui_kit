@@ -6,14 +6,16 @@ class NDSImageButton extends StatefulWidget {
     super.key,
     this.imagePath = 'assets/images/button_large.png',
     this.pressedImagePath = 'assets/images/button_large_pressed.png',
-    this.child,
+    this.size,
     this.onTap,
+    this.child,
   });
 
   final String imagePath;
   final String pressedImagePath;
-  final Widget? child;
+  final Size? size;
   final VoidCallback? onTap;
+  final Widget? child;
 
   @override
   State<NDSImageButton> createState() => _NDSImageButtonState();
@@ -31,9 +33,7 @@ class _NDSImageButtonState extends State<NDSImageButton> {
       onTap: widget.onTap,
       child: Stack(
         children: [
-          ImagePP(
-            _isPressed ? widget.pressedImagePath : widget.imagePath,
-          ),
+          ImagePP(_isPressed ? widget.pressedImagePath : widget.imagePath),
           if (widget.child != null) Positioned.fill(child: widget.child!),
         ],
       ),
