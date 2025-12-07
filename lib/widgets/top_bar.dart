@@ -10,35 +10,29 @@ class NDSTopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 36,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          ImagePP('assets/images/top_bar_bg_1.png', repeat: ImageRepeat.repeat),
-          Padding(
-            padding: const EdgeInsets.only(left: 8, right: 0, bottom: 4),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(padding: .only(top: 3), child: NDSEditablePseudo()),
-                Spacer(),
-                // for each child, add a spacer
-                ...children.map(
-                  (child) => Row(
-                    children: [
-                      _Divider(),
-                      Gap(8),
-                      Padding(padding: .only(top: 3), child: child),
-                      Gap(8),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: ImagePP(
+            'assets/images/top_bar_bg_1.png',
+            repeat: ImageRepeat.repeat,
           ),
-        ],
-      ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 4),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              NDSEditablePseudo(),
+              Spacer(),
+              // for each child, add a spacer
+              ...children.map(
+                (child) => Row(children: [_Divider(), Gap(4), child, Gap(4)]),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

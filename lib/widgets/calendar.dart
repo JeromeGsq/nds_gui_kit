@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:nds_gui_kit/main.dart';
 import 'package:nds_gui_kit/widgets/image_pp.dart';
 import 'package:nds_gui_kit/widgets/text.dart';
 
@@ -53,25 +52,24 @@ class NDSCalendarState extends State<NDSCalendar> {
       children: [
         ImagePP('assets/images/calendar.png'),
         Positioned(
-          top: 2 * scaleFactor,
+          top: 3.5,
           left: 0,
           right: 0,
           child: Center(
             child: NDSText(
               text: '${month.toString().padLeft(2, '0')} / $year',
-              fontSize: 16 * scaleFactor,
               color: Colors.grey[800]!,
             ),
           ),
         ),
         Positioned(
-          top: (_headerHeight + 1) * scaleFactor,
-          left: 2 * scaleFactor,
+          top: (_headerHeight + 2.5),
+          left: 2,
           child: _buildWeekdayHeader(),
         ),
         Positioned(
-          top: (_headerHeight + _weekdayHeight + 2) * scaleFactor,
-          left: 2 * scaleFactor,
+          top: (_headerHeight + _weekdayHeight + 2),
+          left: 2,
           child: _buildDaysGrid(daysInMonth, startWeekday, today),
         ),
       ],
@@ -85,8 +83,8 @@ class NDSCalendarState extends State<NDSCalendar> {
       mainAxisSize: MainAxisSize.min,
       children: List.generate(7, (index) {
         return SizedBox(
-          width: _cellWidth * scaleFactor,
-          height: _cellHeight * scaleFactor,
+          width: _cellWidth,
+          height: _cellHeight,
           child: Center(child: NDSText(text: weekdays[index])),
         );
       }),
@@ -107,12 +105,7 @@ class NDSCalendarState extends State<NDSCalendar> {
         int cellIndex = week * 7 + weekday;
 
         if (cellIndex < startWeekday || dayCounter > daysInMonth) {
-          dayCells.add(
-            SizedBox(
-              width: _cellWidth * scaleFactor,
-              height: _cellHeight * scaleFactor,
-            ),
-          );
+          dayCells.add(SizedBox(width: _cellWidth, height: _cellHeight));
         } else {
           bool isToday = dayCounter == today;
           dayCells.add(_buildDayCell(dayCounter, weekday, isToday));
@@ -141,17 +134,14 @@ class NDSCalendarState extends State<NDSCalendar> {
 
     if (isToday) {
       return SizedBox(
-        width: _cellWidth * scaleFactor,
-        height: _cellHeight * scaleFactor,
+        width: _cellWidth,
+        height: _cellHeight,
         child: Center(
           child: Container(
-            width: 11 * scaleFactor,
-            height: 11 * scaleFactor,
+            width: 11,
+            height: 11,
             decoration: BoxDecoration(
-              border: Border.all(
-                color: const Color(0xFF0000FF),
-                width: 1 * scaleFactor,
-              ),
+              border: Border.all(color: const Color(0xFF0000FF), width: 1),
               color: const Color.fromARGB(64, 0, 0, 255),
             ),
             alignment: Alignment.center,
@@ -162,8 +152,8 @@ class NDSCalendarState extends State<NDSCalendar> {
     }
 
     return SizedBox(
-      width: _cellWidth * scaleFactor,
-      height: _cellHeight * scaleFactor,
+      width: _cellWidth,
+      height: _cellHeight,
       child: Center(child: content),
     );
   }

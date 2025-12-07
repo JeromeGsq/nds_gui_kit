@@ -14,7 +14,15 @@ class TopScreen extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        const NDSBackgroundTop(),
+        Positioned(
+          top: 7,
+          left: -18,
+          child: SizedBox(
+            height: 192,
+            width: 256 + 18,
+            child: const NDSBackgroundTop(),
+          ),
+        ),
         Positioned(
           left: 0,
           top: 0,
@@ -33,9 +41,12 @@ class TopScreen extends StatelessWidget {
           ),
         ),
 
-        // Content
-        Positioned(left: 80, top: 113, child: const NDSClock()),
-        Positioned(right: 76, top: 72, child: const NDSCalendar()),
+        Stack(
+          children: [
+            Positioned(top: 46, left: 14, child: const NDSClock()),
+            Positioned(top: 31, right: 15, child: const NDSCalendar()),
+          ],
+        ),
       ],
     );
   }

@@ -4,8 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:nds_gui_kit/pages/bottom/bottom.dart';
 import 'package:nds_gui_kit/pages/top/top.dart';
 
-const double scaleFactor = 5.625 / 2;
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
@@ -34,7 +32,15 @@ class TopDisplayView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: TopScreen());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Transform.scale(
+        scale: 2,
+        child: Center(
+          child: SizedBox(width: 256, height: 192, child: TopScreen()),
+        ),
+      ),
+    );
   }
 }
 
@@ -45,7 +51,9 @@ class BottomDisplayView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: Center(child: BottomScreen())),
+      home: Center(
+        child: SizedBox(width: 256, height: 192, child: BottomScreen()),
+      ),
     );
   }
 }

@@ -5,14 +5,18 @@ class NDSText extends StatelessWidget {
     super.key,
     required this.text,
     this.color = Colors.white,
-    this.fontSize = 30,
+    this.fontSize = 12,
     this.extraBold = false,
+    this.maxLines,
+    this.textAlign = TextAlign.center,
   });
 
   final String text;
   final Color color;
   final double fontSize;
   final bool extraBold;
+  final int? maxLines;
+  final TextAlign textAlign;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,9 @@ class NDSText extends StatelessWidget {
                 decoration: TextDecoration.none,
                 fontWeight: FontWeight.w500,
               ),
-              textAlign: TextAlign.center,
+              textAlign: textAlign,
+              maxLines: maxLines,
+              overflow: maxLines != null ? TextOverflow.ellipsis : null,
               textHeightBehavior: const TextHeightBehavior(
                 applyHeightToFirstAscent: false,
               ),
@@ -46,8 +52,9 @@ class NDSText extends StatelessWidget {
             decoration: TextDecoration.none,
             fontWeight: FontWeight.w500,
           ),
-
-          textAlign: TextAlign.center,
+          textAlign: textAlign,
+          maxLines: maxLines,
+          overflow: maxLines != null ? TextOverflow.ellipsis : null,
           textHeightBehavior: const TextHeightBehavior(
             applyHeightToFirstAscent: false,
           ),

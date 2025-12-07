@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nds_gui_kit/main.dart';
 
 class ImagePP extends StatelessWidget {
   const ImagePP(
@@ -17,7 +16,7 @@ class ImagePP extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.asset(
       imagePath,
-      scale: scale ?? 1 / (scaleFactor),
+      scale: scale ?? 1,
       isAntiAlias: false,
       filterQuality: FilterQuality.none,
       repeat: repeat,

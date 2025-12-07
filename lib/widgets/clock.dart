@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:nds_gui_kit/main.dart';
 import 'package:nds_gui_kit/widgets/image_pp.dart';
 
 class NDSClock extends StatefulWidget {
@@ -68,11 +67,7 @@ class NDSClockState extends State<NDSClock> {
         // Seconds
         _ClockHand(angle: _secondsAngle, length: 40, color: Colors.red),
 
-        Container(
-          width: 5 * scaleFactor,
-          height: 5 * scaleFactor,
-          color: Colors.grey[700]!,
-        ),
+        Container(width: 5, height: 5, color: Colors.grey[700]!),
       ],
     );
   }
@@ -94,7 +89,7 @@ class _ClockHand extends StatelessWidget {
     return Transform.rotate(
       angle: angle,
       child: Transform.scale(
-        scale: scaleFactor,
+        scale: 1,
         child: Transform.translate(
           offset: Offset(length / 2, 0),
           child: Container(width: length, height: 2, color: color),

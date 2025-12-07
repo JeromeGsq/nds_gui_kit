@@ -54,7 +54,7 @@ class NDSBatteryState extends State<NDSBattery> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 6,
+      spacing: 4,
       children: [
         NDSText(text: '$_batteryLevel%'),
         Stack(
@@ -64,16 +64,16 @@ class NDSBatteryState extends State<NDSBattery> {
               left: 0,
               child: Container(
                 color: _colorLevel,
-                height: 8,
-                width: 32 * _batteryLevel / 100,
+                height: 2,
+                width: 12 * _batteryLevel / 100,
               ),
             ),
             Positioned(
               left: 0,
               child: Container(
                 color: _colorLevel,
-                height: 16,
-                width: 26 * _batteryLevel / 100,
+                height: 4,
+                width: 10 * _batteryLevel / 100,
               ),
             ),
             ImagePP('assets/images/battery.png'),
