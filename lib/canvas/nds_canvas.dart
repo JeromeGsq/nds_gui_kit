@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 const int kNDSWidth = 256;
 const int kNDSHeight = 192;
 
-/// Base canvas widget that provides a 256x192 pixel-perfect rendering surface.
-/// Scales the canvas to fit the available space while maintaining aspect ratio.
 class NDSCanvas extends StatelessWidget {
   const NDSCanvas({
     super.key,
@@ -63,9 +61,9 @@ class NDSCanvas extends StatelessWidget {
                     onTap?.call(pixelPos);
                   }
                 : null,
-            onLongPress: onLongPress != null
+            onTapCancel: onTapUp != null
                 ? () {
-                    // For long press, we'd need to track the last position
+                    onTapUp?.call(Offset.zero);
                   }
                 : null,
             onLongPressStart: onLongPress != null
@@ -186,7 +184,7 @@ abstract class NDSCanvasPainter extends ChangeNotifier {
     String text,
     Offset position, {
     Color color = Colors.white,
-    double fontSize = 18,
+    double fontSize = 12,
     String fontFamily = 'Nintendo-DS-BIOS',
     TextAlign textAlign = TextAlign.left,
     double? maxWidth,

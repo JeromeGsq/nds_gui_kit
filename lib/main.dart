@@ -1,7 +1,7 @@
 import 'package:external_display/external_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nds_gui_kit/canvas/bottom_screen_canvas.dart';
+import 'package:nds_gui_kit/canvas/bottom/bottom_screen_canvas.dart';
 import 'package:nds_gui_kit/canvas/image_cache.dart';
 import 'package:nds_gui_kit/canvas/nds_canvas.dart';
 import 'package:nds_gui_kit/canvas/top_screen_canvas.dart';
@@ -21,7 +21,7 @@ void main() async {
     );
   }
 
-  runApp(const TopDisplayView());
+  runApp(const BottomDisplayView());
 }
 
 @pragma('vm:entry-point')
@@ -52,8 +52,6 @@ class TopDisplayView extends StatelessWidget {
             final scaleX = constraints.maxWidth / kNDSWidth;
             final scaleY = constraints.maxHeight / kNDSHeight;
             var scale = scaleX < scaleY ? scaleX : scaleY;
-
-            return SizedBox();
 
             return Center(
               child: SizedBox(

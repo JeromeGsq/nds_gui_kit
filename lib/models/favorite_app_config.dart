@@ -4,11 +4,13 @@ class FavoriteAppConfig {
   final String? packageName;
   final String? appName;
   final Uint8List? appIcon;
+  final bool isLarge;
 
   const FavoriteAppConfig({
     this.packageName,
     this.appName,
     this.appIcon,
+    this.isLarge = false,
   });
 
   bool get isConfigured => packageName != null && appName != null;
@@ -18,6 +20,7 @@ class FavoriteAppConfig {
       'packageName': packageName,
       'appName': appName,
       'appIcon': appIcon?.toList(),
+      'isLarge': isLarge,
     };
   }
 
@@ -28,6 +31,7 @@ class FavoriteAppConfig {
       appIcon: json['appIcon'] != null
           ? Uint8List.fromList(List<int>.from(json['appIcon']))
           : null,
+      isLarge: json['isLarge'] as bool? ?? false,
     );
   }
 
@@ -39,12 +43,13 @@ class FavoriteAppConfig {
     String? packageName,
     String? appName,
     Uint8List? appIcon,
+    bool? isLarge,
   }) {
     return FavoriteAppConfig(
       packageName: packageName ?? this.packageName,
       appName: appName ?? this.appName,
       appIcon: appIcon ?? this.appIcon,
+      isLarge: isLarge ?? this.isLarge,
     );
   }
 }
-
