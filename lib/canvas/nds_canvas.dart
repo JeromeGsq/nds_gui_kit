@@ -186,7 +186,7 @@ abstract class NDSCanvasPainter extends ChangeNotifier {
     String text,
     Offset position, {
     Color color = Colors.white,
-    double fontSize = 12,
+    double fontSize = 18,
     String fontFamily = 'Nintendo-DS-BIOS',
     TextAlign textAlign = TextAlign.left,
     double? maxWidth,

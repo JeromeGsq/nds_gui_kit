@@ -53,6 +53,8 @@ class TopDisplayView extends StatelessWidget {
             final scaleY = constraints.maxHeight / kNDSHeight;
             var scale = scaleX < scaleY ? scaleX : scaleY;
 
+            return SizedBox();
+
             return Center(
               child: SizedBox(
                 width: kNDSWidth * scale,

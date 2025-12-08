@@ -46,6 +46,7 @@ class _BottomScreenCanvasState extends State<BottomScreenCanvas> {
 
   @override
   Widget build(BuildContext context) {
+    _loadResources();
     if (!_isLoaded) {
       return const SizedBox.shrink();
     }
@@ -63,14 +64,14 @@ class _BottomScreenCanvasState extends State<BottomScreenCanvas> {
 class _ButtonDef {
   final Rect rect;
   final String id;
-  final String imagePath;
-  final String? pressedImagePath;
+  final ui.Image image;
+  final ui.Image? pressedImage;
 
   const _ButtonDef({
     required this.rect,
     required this.id,
-    required this.imagePath,
-    this.pressedImagePath,
+    required this.image,
+    this.pressedImage,
   });
 }
 
@@ -80,6 +81,8 @@ class BottomScreenPainter extends NDSCanvasPainter {
   ui.Image? _bgTile;
   ui.Image? _buttonMain;
   ui.Image? _buttonMainPressed;
+  ui.Image? _buttonLarge;
+  ui.Image? _buttonLargePressed;
   ui.Image? _buttonLight;
   ui.Image? _buttonSettings;
   ui.Image? _buttonMore;
@@ -112,6 +115,12 @@ class BottomScreenPainter extends NDSCanvasPainter {
     _buttonMainPressed = await cache.loadImage(
       'assets/images/button_main_pressed.png',
     );
+
+    _buttonLarge = await cache.loadImage('assets/images/button_large.png');
+    _buttonLargePressed = await cache.loadImage(
+      'assets/images/button_large_pressed.png',
+    );
+
     _buttonLight = await cache.loadImage('assets/images/button_light.png');
     _buttonSettings = await cache.loadImage(
       'assets/images/button_settings.png',
@@ -134,22 +143,73 @@ class BottomScreenPainter extends NDSCanvasPainter {
   }
 
   void _setupButtons() {
+    _buttons.clear();
+
     // Main favorite button (center of screen)
-    if (_buttonMain != null) {
+    if (_buttonMain != null && _buttonLarge != null) {
       final mainBtnWidth = _buttonMain!.width.toDouble();
       final mainBtnHeight = _buttonMain!.height.toDouble();
 
+      final largeBtnWidth = _buttonLarge!.width.toDouble();
+      final largeBtnHeight = _buttonLarge!.height.toDouble();
+
+      // Top favorite button
       _buttons.add(
         _ButtonDef(
           rect: Rect.fromLTWH(
             (kNDSWidth - mainBtnWidth) / 2 + .5,
-            (kNDSHeight - mainBtnHeight) / 2 + .5,
+            (kNDSHeight - mainBtnHeight) / 2 + .5 - 48,
             mainBtnWidth,
             mainBtnHeight,
           ),
           id: 'favorite_0',
-          imagePath: 'assets/images/button_main.png',
-          pressedImagePath: 'assets/images/button_main_pressed.png',
+          image: _buttonMain!,
+          pressedImage: _buttonMainPressed!,
+        ),
+      );
+
+      // Bottom favorite button
+      _buttons.add(
+        _ButtonDef(
+          rect: Rect.fromLTWH(
+            (kNDSWidth - mainBtnWidth) / 2 + .5,
+            (kNDSHeight - mainBtnHeight) / 2 + .5 + 48,
+            mainBtnWidth,
+            mainBtnHeight,
+          ),
+          id: 'favorite_1',
+          image: _buttonMain!,
+          pressedImage: _buttonMainPressed!,
+        ),
+      );
+
+      // Left favorite button
+      _buttons.add(
+        _ButtonDef(
+          rect: Rect.fromLTWH(
+            (kNDSWidth - largeBtnWidth) / 2 + .5 - 48,
+            (kNDSHeight - largeBtnHeight) / 2 + .5,
+            largeBtnWidth,
+            largeBtnHeight,
+          ),
+          id: 'favorite_2',
+          image: _buttonLarge!,
+          pressedImage: _buttonLargePressed!,
+        ),
+      );
+
+      // Right favorite button
+      _buttons.add(
+        _ButtonDef(
+          rect: Rect.fromLTWH(
+            (kNDSWidth - largeBtnWidth) / 2 + .5 + 48,
+            (kNDSHeight - largeBtnHeight) / 2 + .5,
+            largeBtnWidth,
+            largeBtnHeight,
+          ),
+          id: 'favorite_3',
+          image: _buttonLarge!,
+          pressedImage: _buttonLargePressed!,
         ),
       );
     }
@@ -170,7 +230,7 @@ class BottomScreenPainter extends NDSCanvasPainter {
             _buttonLight!.height.toDouble(),
           ),
           id: 'light',
-          imagePath: 'assets/images/button_light.png',
+          image: _buttonLight!,
         ),
       );
     }
@@ -185,7 +245,7 @@ class BottomScreenPainter extends NDSCanvasPainter {
             _buttonSettings!.height.toDouble(),
           ),
           id: 'settings',
-          imagePath: 'assets/images/button_settings.png',
+          image: _buttonSettings!,
         ),
       );
     }
@@ -200,7 +260,7 @@ class BottomScreenPainter extends NDSCanvasPainter {
             _buttonMore!.height.toDouble(),
           ),
           id: 'more',
-          imagePath: 'assets/images/button_more_apps.png',
+          image: _buttonMore!,
         ),
       );
     }
@@ -345,8 +405,8 @@ class BottomScreenPainter extends NDSCanvasPainter {
     // Draw background
     _drawBackground(canvas);
 
-    // Draw main favorite button
-    _drawFavoriteButton(canvas, 0);
+    // Draw all favorite buttons
+    _drawFavoriteLargeButtons(canvas);
 
     // Draw bottom bar buttons
     _drawBottomBarButtons(canvas);
@@ -389,25 +449,27 @@ class BottomScreenPainter extends NDSCanvasPainter {
     }
   }
 
-  void _drawFavoriteButton(Canvas canvas, int index) {
-    final button = _buttons.firstWhere(
-      (b) => b.id == 'favorite_$index',
-      orElse: () => throw Exception('Button not found'),
-    );
+  void _drawFavoriteLargeButtons(Canvas canvas) {
+    // Loop through all favorite buttons that are defined
+    final favoriteButtons = _buttons.where((b) => b.id.startsWith('favorite_'));
 
-    final isPressed = _pressedButtonId == button.id;
-    final image = isPressed ? _buttonMainPressed : _buttonMain;
+    for (final button in favoriteButtons) {
+      final index = int.parse(button.id.split('_')[1]);
 
-    if (image == null) return;
+      final isPressed = _pressedButtonId == button.id;
+      final image = isPressed ? button.pressedImage : button.image;
 
-    drawImage(canvas, image, button.rect.topLeft);
+      if (image == null) continue;
 
-    // Draw app content
-    final config = _favorites[index];
-    if (config.isConfigured) {
-      _drawConfiguredFavorite(canvas, button.rect, config);
-    } else {
-      _drawUnconfiguredFavorite(canvas, button.rect);
+      drawImage(canvas, image, button.rect.topLeft);
+
+      // Draw app content
+      final config = _favorites[index];
+      if (config.isConfigured) {
+        _drawConfiguredFavorite(canvas, button.rect, config);
+      } else {
+        _drawUnconfiguredFavorite(canvas, button.rect);
+      }
     }
   }
 
@@ -422,8 +484,8 @@ class BottomScreenPainter extends NDSCanvasPainter {
         : null;
 
     if (iconImage != null) {
-      final iconSize = 48.0;
-      final iconX = buttonRect.left + 12;
+      final iconSize = 32.0;
+      final iconX = buttonRect.left + 7;
       final iconY = buttonRect.top + (buttonRect.height - iconSize) / 2;
 
       canvas.drawImageRect(
@@ -440,8 +502,8 @@ class BottomScreenPainter extends NDSCanvasPainter {
     }
 
     // Draw app name
-    final textX = buttonRect.left + (iconImage != null ? 72 : 12);
-    final textY = buttonRect.top + buttonRect.height / 2 - 6;
+    final textX = buttonRect.left + (iconImage != null ? 64 : 12);
+    final textY = buttonRect.top + buttonRect.height / 2 - 6.5;
 
     drawText(
       canvas,
@@ -455,40 +517,14 @@ class BottomScreenPainter extends NDSCanvasPainter {
   void _drawUnconfiguredFavorite(Canvas canvas, Rect buttonRect) {
     // Draw "+" icon
     final centerX = buttonRect.center.dx;
-    final centerY = buttonRect.center.dy - 10;
-
-    // Draw circle outline
-    canvas.drawCircle(
-      Offset(centerX, centerY),
-      20,
-      Paint()
-        ..color = Colors.black.withValues(alpha: 0.3)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2,
-    );
-
-    // Draw plus
-    drawLine(
-      canvas,
-      Offset(centerX - 10, centerY),
-      Offset(centerX + 10, centerY),
-      Colors.black.withValues(alpha: 0.3),
-      strokeWidth: 2,
-    );
-    drawLine(
-      canvas,
-      Offset(centerX, centerY - 10),
-      Offset(centerX, centerY + 10),
-      Colors.black.withValues(alpha: 0.3),
-      strokeWidth: 2,
-    );
+    final centerY = buttonRect.center.dy - 7;
 
     // Draw "Ajouter" text
     drawText(
       canvas,
-      'Ajouter',
-      Offset(centerX, centerY + 28),
-      color: Colors.black.withValues(alpha: 0.5),
+      '-',
+      Offset(centerX, centerY),
+      color: Colors.black,
       textAlign: TextAlign.center,
       fontSize: 14,
     );
