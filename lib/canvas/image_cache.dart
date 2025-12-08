@@ -2,9 +2,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 
 /// Singleton cache for loading and storing UI images for canvas drawing.
-class NDSImageCache {
-  NDSImageCache._();
-  static final NDSImageCache instance = NDSImageCache._();
+class MainImageCache {
+  MainImageCache._();
+  static final MainImageCache instance = MainImageCache._();
 
   final Map<String, ui.Image> _cache = {};
   final Map<String, Future<ui.Image>> _pending = {};
@@ -46,7 +46,7 @@ class NDSImageCache {
   Future<Map<String, ui.Image>> loadImages(List<String> assetPaths) async {
     final futures = assetPaths.map((path) => loadImage(path));
     final images = await Future.wait(futures);
-    
+
     final result = <String, ui.Image>{};
     for (int i = 0; i < assetPaths.length; i++) {
       result[assetPaths[i]] = images[i];
@@ -93,4 +93,3 @@ class NDSImageCache {
     image?.dispose();
   }
 }
-

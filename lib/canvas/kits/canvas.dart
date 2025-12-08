@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 const int kNDSWidth = 256;
 const int kNDSHeight = 192;
 
-class NDSCanvas extends StatelessWidget {
-  const NDSCanvas({
+class MainCanvas extends StatelessWidget {
+  const MainCanvas({
     super.key,
     required this.painter,
     this.onTap,

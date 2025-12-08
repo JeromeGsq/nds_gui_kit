@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nds_gui_kit/canvas/bottom/bottom_screen_canvas.dart';
 import 'package:nds_gui_kit/canvas/image_cache.dart';
-import 'package:nds_gui_kit/canvas/nds_canvas.dart';
-import 'package:nds_gui_kit/canvas/top_screen_canvas.dart';
+import 'package:nds_gui_kit/canvas/kits/canvas.dart';
+import 'package:nds_gui_kit/canvas/screen_assets.dart';
+import 'package:nds_gui_kit/canvas/top/top_screen_canvas.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
-  // Preload all images
-  await NDSImageCache.instance.preloadAllImages();
+  await ScreenAssets.ensureLoaded();
+  await MainImageCache.instance.preloadAllImages();
 
   final screens = await externalDisplay.getScreen();
   if (screens.length > 1) {
@@ -28,10 +28,11 @@ void main() async {
 void externalDisplayMain() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  await Future.delayed(const Duration(milliseconds: 500));
 
-  // Preload all images for external display
-  await NDSImageCache.instance.preloadAllImages();
+  await ScreenAssets.ensureLoaded();
+  await MainImageCache.instance.preloadAllImages();
+
+  await Future.delayed(const Duration(milliseconds: 100));
 
   runApp(BottomDisplayView());
 }

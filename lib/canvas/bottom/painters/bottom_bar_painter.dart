@@ -1,73 +1,45 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
-import 'package:nds_gui_kit/canvas/bottom/models/bottom_screen_assets.dart';
+import 'package:nds_gui_kit/canvas/kits/button.dart';
+import 'package:nds_gui_kit/canvas/bottom/bottom_screen_painter.dart';
+import 'package:nds_gui_kit/canvas/screen_assets.dart';
 
-class BottomBar {
-  static List<BottomBarButton> _buttons = [];
-
-  static void tap(Offset position) {
-    for (final button in _buttons) {
-      if (button.containsPoint(position)) {
-        button.onTap?.call();
-      }
-    }
-  }
+class BottomBarPainter {
+  static List<Button> _buttons = [];
 
   static void draw(Canvas canvas) {
-    final assets = BottomScreenAssets.instance;
+    final assets = ScreenAssets.instance;
 
     // Light button
     _buttons = [
-      BottomBarButton(
+      Button(
         image: assets.buttonLight,
-        position: const Offset(6.0, 171),
-        onTap: () {},
+        position: const Offset(6, 171),
+        onPressed: () {
+          overlayVisible = true;
+        },
       ),
 
       // Settings button
-      BottomBarButton(
+      Button(
         image: assets.buttonSettings,
         position: const Offset(118, 171),
-        onTap: () {},
+        onPressed: () {},
       ),
 
       // More button
-      BottomBarButton(
+      Button(
         image: assets.buttonMore,
         position: const Offset(230, 171),
-        onTap: () {},
+        onPressed: () {},
       ),
     ];
 
     for (final button in _buttons) {
+      if (button.containsPoint(touchPosition)) {
+        button.tap();
+      }
+
       button.draw(canvas);
     }
-  }
-}
-
-class BottomBarButton {
-  BottomBarButton({required this.image, required this.position, this.onTap});
-
-  final ui.Image image;
-  final Offset position;
-  final VoidCallback? onTap;
-
-  late Rect rect;
-
-  void draw(Canvas canvas) {
-    final paint = Paint()..filterQuality = FilterQuality.none;
-    canvas.drawImage(image, position, paint);
-
-    rect = Rect.fromLTWH(
-      position.dx,
-      position.dy,
-      image.width.toDouble(),
-      image.height.toDouble(),
-    );
-  }
-
-  bool containsPoint(Offset position) {
-    return rect.contains(position);
   }
 }

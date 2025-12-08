@@ -4,13 +4,13 @@ import 'package:nds_gui_kit/canvas/image_cache.dart';
 
 /// Singleton that encapsulates all image assets for the bottom screen
 /// Loaded once via [ensureLoaded], then accessible via [instance]
-class BottomScreenAssets {
+class ScreenAssets {
   // Singleton
-  static BottomScreenAssets? _instance;
+  static ScreenAssets? _instance;
   static Future<void>? _loadingFuture;
 
   /// Get the singleton instance (throws if not loaded)
-  static BottomScreenAssets get instance {
+  static ScreenAssets get instance {
     if (_instance == null) {
       throw StateError(
         'BottomScreenAssets not loaded. Call ensureLoaded() first.',
@@ -32,7 +32,7 @@ class BottomScreenAssets {
   }
 
   static Future<void> _load() async {
-    final cache = NDSImageCache.instance;
+    final cache = MainImageCache.instance;
 
     final results = await Future.wait([
       cache.loadImage('assets/images/bg_tile_bottom.png'),
@@ -45,7 +45,7 @@ class BottomScreenAssets {
       cache.loadImage('assets/images/button_more_apps.png'),
     ]);
 
-    _instance = BottomScreenAssets._(
+    _instance = ScreenAssets._(
       bgTile: results[0],
       buttonMain: results[1],
       buttonMainPressed: results[2],
@@ -67,7 +67,7 @@ class BottomScreenAssets {
   final ui.Image buttonSettings;
   final ui.Image buttonMore;
 
-  const BottomScreenAssets._({
+  const ScreenAssets._({
     required this.bgTile,
     required this.buttonMain,
     required this.buttonMainPressed,

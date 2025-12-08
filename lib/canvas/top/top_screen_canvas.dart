@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:nds_gui_kit/canvas/image_cache.dart';
-import 'package:nds_gui_kit/canvas/nds_canvas.dart';
+import 'package:nds_gui_kit/canvas/kits/canvas.dart';
 import 'package:battery_plus/battery_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,7 +49,7 @@ class _TopScreenCanvasState extends State<TopScreenCanvas> {
       return const SizedBox.shrink();
     }
 
-    return NDSCanvas(
+    return MainCanvas(
       painter: _painter,
       onTap: (pos) => _painter.handleTap(context, pos),
     );
@@ -83,7 +83,7 @@ class TopScreenPainter extends NDSCanvasPainter {
   static const double calendarY = 32;
 
   Future<void> initialize() async {
-    final cache = NDSImageCache.instance;
+    final cache = MainImageCache.instance;
 
     // Load all images
     _bgTile = await cache.loadImage('assets/images/bg_tile_top.png');

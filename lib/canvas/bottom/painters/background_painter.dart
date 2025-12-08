@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:nds_gui_kit/canvas/bottom/models/bottom_screen_assets.dart';
-import 'package:nds_gui_kit/canvas/nds_canvas.dart';
+import 'package:nds_gui_kit/canvas/screen_assets.dart';
+import 'package:nds_gui_kit/canvas/kits/canvas.dart';
 
-/// Mixin that provides background painting functionality
-mixin BackgroundPainter {
-  /// Draw the tiled background
-  void drawBackground(Canvas canvas) {
-    if (!BottomScreenAssets.isLoaded) return;
+class BackgroundPainter {
+  static void draw(Canvas canvas) {
+    if (!ScreenAssets.isLoaded) return;
 
-    final bgTile = BottomScreenAssets.instance.bgTile;
+    final bgTile = ScreenAssets.instance.bgTile;
     final tileWidth = bgTile.width.toDouble();
     final tileHeight = bgTile.height.toDouble();
 

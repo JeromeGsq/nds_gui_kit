@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:nds_gui_kit/canvas/nds_canvas.dart';
+import 'package:nds_gui_kit/canvas/bottom/bottom_screen_painter.dart';
+import 'package:nds_gui_kit/canvas/kits/canvas.dart';
 
-/// Mixin that provides overlay painting functionality
-mixin OverlayPainter {
-  /// Draw a full-screen semi-transparent overlay
-  void drawOverlay(Canvas canvas) {
+class OverlayPainter {
+  static void draw(Canvas canvas) {
     final rect = Rect.fromLTWH(
       0,
       0,
       kNDSWidth.toDouble(),
       kNDSHeight.toDouble(),
     );
+
+    if (touchPosition != null && rect.contains(touchPosition!)) {
+      overlayVisible = false;
+    }
+
+    // Overlay
     canvas.drawRect(rect, Paint()..color = Colors.black);
   }
 }
-
