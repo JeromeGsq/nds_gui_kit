@@ -2,15 +2,19 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:nds_gui_kit/canvas/bottom/bottom_screen_painter.dart';
+import 'package:nds_gui_kit/canvas/kits/paintable.dart';
+import 'package:nds_gui_kit/canvas/kits/text.dart';
 
-class Button {
-  Button({
+class AppButton extends Paintable {
+  AppButton({
+    required this.canvas,
     required this.image,
     required this.position,
     this.onPressed,
     this.pressedImage,
   });
 
+  final Canvas canvas;
   final ui.Image image;
   final Offset position;
   final VoidCallback? onPressed;
@@ -25,7 +29,8 @@ class Button {
     image.height.toDouble(),
   );
 
-  void draw(Canvas canvas) {
+  @override
+  void draw() {
     canvas.drawImage(image, position, Paint());
 
     if (isPressed && pressedImage != null) {
@@ -38,6 +43,10 @@ class Button {
     }
   }
 
+  void child(Paintable child) {
+    child.draw();
+  }
+
   void tap() {
     isPressed = true;
     onPressed?.call();
@@ -46,5 +55,57 @@ class Button {
 
   bool containsPoint(Offset? position) {
     return rect.contains(position ?? Offset.zero);
+  }
+}
+
+class AppLargeButton extends AppButton {
+  AppLargeButton({
+    required super.canvas,
+    required super.image,
+    required super.position,
+    required super.onPressed,
+    required super.pressedImage,
+    required this.text,
+  });
+
+  final String text;
+
+  @override
+  void draw() {
+    super.draw();
+
+    AppText(
+      canvas: canvas,
+      text: text,
+      position: Offset(64, 16) + position,
+      fontSize: 14,
+      color: Colors.black,
+    ).draw();
+  }
+}
+
+class AppMainButton extends AppButton {
+  AppMainButton({
+    required super.canvas,
+    required super.image,
+    required super.position,
+    required super.onPressed,
+    required super.pressedImage,
+    required this.text,
+  });
+
+  final String text;
+
+  @override
+  void draw() {
+    super.draw();
+
+    AppText(
+      canvas: canvas,
+      text: text,
+      position: Offset(16, 16) + position,
+      fontSize: 14,
+      color: Colors.black,
+    ).draw();
   }
 }

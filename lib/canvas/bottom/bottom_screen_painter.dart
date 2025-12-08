@@ -14,13 +14,14 @@ class BottomScreenPainter extends NDSCanvasPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (overlayVisible) {
+      OverlayPainter.draw(canvas);
+      return;
+    }
+
     BackgroundPainter.draw(canvas);
     BottomBarPainter.draw(canvas);
     FavoriteButtonsPainter.draw(canvas);
-
-    if (overlayVisible) {
-      OverlayPainter.draw(canvas);
-    }
   }
 
   @override

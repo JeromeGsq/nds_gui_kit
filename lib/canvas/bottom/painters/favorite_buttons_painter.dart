@@ -4,38 +4,50 @@ import 'package:nds_gui_kit/canvas/kits/button.dart';
 import 'package:nds_gui_kit/canvas/screen_assets.dart';
 
 class FavoriteButtonsPainter {
-  static List<Button> _buttons = [];
+  static List<AppButton> _buttons = [];
 
   static void draw(Canvas canvas) {
     final assets = ScreenAssets.instance;
 
     _buttons = [
       // Top Button
-      Button(
+      AppLargeButton(
+        canvas: canvas,
+        text: '',
+        position: const Offset(34, 26),
         image: assets.buttonMain,
         pressedImage: assets.buttonMainPressed,
-        position: const Offset(34, 26),
+        onPressed: () {},
       ),
 
       // Left Button
-      Button(
+      AppMainButton(
+        canvas: canvas,
+        text: '',
+        position: const Offset(34, 74),
         image: assets.buttonLarge,
         pressedImage: assets.buttonLargePressed,
-        position: const Offset(34, 74),
+        onPressed: () {},
       ),
 
       // Right Button
-      Button(
+      AppMainButton(
+        canvas: canvas,
+        text: '',
+        position: const Offset(130, 74),
         image: assets.buttonLarge,
         pressedImage: assets.buttonLargePressed,
-        position: const Offset(130, 74),
+        onPressed: () {},
       ),
 
       // Bottom Button
-      Button(
+      AppLargeButton(
+        canvas: canvas,
+        text: '',
+        position: const Offset(34, 122),
         image: assets.buttonMain,
         pressedImage: assets.buttonMainPressed,
-        position: const Offset(34, 122),
+        onPressed: () {},
       ),
     ];
 
@@ -44,7 +56,7 @@ class FavoriteButtonsPainter {
         button.tap();
       }
 
-      button.draw(canvas);
+      button.draw();
     }
   }
 }
