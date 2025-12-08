@@ -11,11 +11,12 @@ class OverlayPainter {
       kNDSHeight.toDouble(),
     );
 
+    // Overlay
+    canvas.drawRect(rect, Paint()..color = Colors.black);
+
+    // Touch detection
     if (touchPosition != null && rect.contains(touchPosition!)) {
       overlayVisible = false;
     }
-
-    // Overlay
-    canvas.drawRect(rect, Paint()..color = Colors.black);
   }
 }

@@ -4,8 +4,6 @@ import 'package:nds_gui_kit/canvas/kits/canvas.dart';
 
 class BackgroundPainter {
   static void draw(Canvas canvas) {
-    if (!ScreenAssets.isLoaded) return;
-
     final bgTile = ScreenAssets.instance.bgTile;
     final tileWidth = bgTile.width.toDouble();
     final tileHeight = bgTile.height.toDouble();

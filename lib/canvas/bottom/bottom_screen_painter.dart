@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nds_gui_kit/canvas/bottom/managers/favorites_manager.dart';
-import 'package:nds_gui_kit/canvas/screen_assets.dart';
+import 'package:nds_gui_kit/canvas/bottom/painters/favorite_buttons_painter.dart';
 import 'package:nds_gui_kit/canvas/bottom/painters/background_painter.dart';
 import 'package:nds_gui_kit/canvas/bottom/painters/bottom_bar_painter.dart';
 import 'package:nds_gui_kit/canvas/bottom/painters/overlay_painter.dart';
@@ -16,6 +16,7 @@ class BottomScreenPainter extends NDSCanvasPainter {
   void paint(Canvas canvas, Size size) {
     BackgroundPainter.draw(canvas);
     BottomBarPainter.draw(canvas);
+    FavoriteButtonsPainter.draw(canvas);
 
     if (overlayVisible) {
       OverlayPainter.draw(canvas);

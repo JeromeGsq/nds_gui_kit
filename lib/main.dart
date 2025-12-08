@@ -7,11 +7,15 @@ import 'package:nds_gui_kit/canvas/kits/canvas.dart';
 import 'package:nds_gui_kit/canvas/screen_assets.dart';
 import 'package:nds_gui_kit/canvas/top/top_screen_canvas.dart';
 
-void main() async {
+Future<void> _init() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  await ScreenAssets.ensureLoaded();
   await MainImageCache.instance.preloadAllImages();
+  await ScreenAssets.ensureLoaded();
+}
+
+void main() async {
+  await _init();
 
   final screens = await externalDisplay.getScreen();
   if (screens.length > 1) {
@@ -26,12 +30,7 @@ void main() async {
 
 @pragma('vm:entry-point')
 void externalDisplayMain() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
-  await ScreenAssets.ensureLoaded();
-  await MainImageCache.instance.preloadAllImages();
-
+  await _init();
   await Future.delayed(const Duration(milliseconds: 100));
 
   runApp(BottomDisplayView());
@@ -44,25 +43,21 @@ class TopDisplayView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: Colors.black),
-      home: Scaffold(
-        backgroundColor: Colors.black,
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            // Calculate scale to fit the screen
-            final scaleX = constraints.maxWidth / kNDSWidth;
-            final scaleY = constraints.maxHeight / kNDSHeight;
-            var scale = scaleX < scaleY ? scaleX : scaleY;
+      home: LayoutBuilder(
+        builder: (context, constraints) {
+          // Calculate scale to fit the screen
+          final scaleX = constraints.maxWidth / kNDSWidth;
+          final scaleY = constraints.maxHeight / kNDSHeight;
+          var scale = scaleX < scaleY ? scaleX : scaleY;
 
-            return Center(
-              child: SizedBox(
-                width: kNDSWidth * scale,
-                height: kNDSHeight * scale,
-                child: const TopScreenCanvas(),
-              ),
-            );
-          },
-        ),
+          return Center(
+            child: SizedBox(
+              width: kNDSWidth * scale,
+              height: kNDSHeight * scale,
+              child: const TopScreenCanvas(),
+            ),
+          );
+        },
       ),
     );
   }
@@ -75,25 +70,21 @@ class BottomDisplayView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: Colors.black),
-      home: Scaffold(
-        backgroundColor: Colors.black,
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            // Calculate scale to fit the screen
-            final scaleX = constraints.maxWidth / kNDSWidth;
-            final scaleY = constraints.maxHeight / kNDSHeight;
-            var scale = scaleX < scaleY ? scaleX : scaleY;
+      home: LayoutBuilder(
+        builder: (context, constraints) {
+          // Calculate scale to fit the screen
+          final scaleX = constraints.maxWidth / kNDSWidth;
+          final scaleY = constraints.maxHeight / kNDSHeight;
+          var scale = scaleX < scaleY ? scaleX : scaleY;
 
-            return Center(
-              child: SizedBox(
-                width: kNDSWidth * scale,
-                height: kNDSHeight * scale,
-                child: const BottomScreenCanvas(),
-              ),
-            );
-          },
-        ),
+          return Center(
+            child: SizedBox(
+              width: kNDSWidth * scale,
+              height: kNDSHeight * scale,
+              child: const BottomScreenCanvas(),
+            ),
+          );
+        },
       ),
     );
   }
