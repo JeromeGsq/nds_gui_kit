@@ -18,11 +18,7 @@ import 'package:nds_gui_kit/widgets/app_selector_overlay.dart';
 /// Painter for the bottom screen
 /// Uses mixins for modular painting functionality
 class BottomScreenPainter extends NDSCanvasPainter
-    with
-        BackgroundPainter,
-        FavoriteButtonsPainter,
-        BottomBarPainter,
-        OverlayPainter {
+    with BackgroundPainter, FavoriteButtonsPainter, OverlayPainter {
   // Managers
   final _favoritesManager = FavoritesManager();
 
@@ -141,6 +137,7 @@ class BottomScreenPainter extends NDSCanvasPainter
 
   // --- Input Handling ---
   void handleTapDown(Offset position) {
+    BottomBar.tap(position);
     for (final button in _buttons) {
       if (button.containsPoint(position)) {
         _pressedButtonId = button.id;
@@ -240,7 +237,7 @@ class BottomScreenPainter extends NDSCanvasPainter
   void paint(Canvas canvas, Size size) {
     drawBackground(canvas);
     drawFavoriteButtons(canvas);
-    drawBottomBarButtons(canvas);
+    BottomBar.draw(canvas);
 
     if (_overlayVisible) {
       drawOverlay(canvas);
