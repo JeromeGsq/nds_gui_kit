@@ -88,7 +88,7 @@ class FavoriteButtonsPainter {
         onButtonTap?.call(i);
       }
 
-      button.draw();
+      button.draw(canvas);
     }
   }
 }

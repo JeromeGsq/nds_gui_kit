@@ -33,7 +33,7 @@ void externalDisplayMain() async {
   await _init();
   await Future.delayed(const Duration(milliseconds: 100));
 
-  runApp(BottomDisplayView());
+  //  runApp(BottomDisplayView());
 }
 
 class TopDisplayView extends StatelessWidget {

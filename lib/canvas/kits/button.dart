@@ -30,7 +30,7 @@ class AppButton extends Paintable {
   );
 
   @override
-  void draw() {
+  void draw(Canvas canvas, {Offset? parentPosition = Offset.zero}) {
     canvas.drawImage(image, position, Paint());
 
     if (isPressed && pressedImage != null) {
@@ -44,7 +44,7 @@ class AppButton extends Paintable {
   }
 
   void child(Paintable child) {
-    child.draw();
+    child.draw(canvas);
   }
 
   void tap() {
@@ -73,8 +73,8 @@ class AppLargeButton extends AppButton {
   final ui.Image? appIcon;
 
   @override
-  void draw() {
-    super.draw();
+  void draw(Canvas canvas, {Offset? parentPosition = Offset.zero}) {
+    super.draw(canvas, parentPosition: parentPosition);
 
     // Draw app icon if available
     if (appIcon != null) {
@@ -98,12 +98,11 @@ class AppLargeButton extends AppButton {
     // Draw text
     if (text.isNotEmpty) {
       AppText(
-        canvas: canvas,
         text: text,
         position: Offset(appIcon != null ? 56 : 64, 16) + position,
         fontSize: 14,
         color: Colors.black,
-      ).draw();
+      ).draw(canvas, parentPosition: parentPosition);
     }
   }
 }
@@ -123,8 +122,8 @@ class AppMainButton extends AppButton {
   final ui.Image? appIcon;
 
   @override
-  void draw() {
-    super.draw();
+  void draw(Canvas canvas, {Offset? parentPosition = Offset.zero}) {
+    super.draw(canvas, parentPosition: parentPosition);
 
     // Draw app icon if available
     if (appIcon != null) {

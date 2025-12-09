@@ -42,7 +42,7 @@ class BottomBarPainter {
         button.tap();
       }
 
-      button.draw();
+      button.draw(canvas);
     }
   }
 }

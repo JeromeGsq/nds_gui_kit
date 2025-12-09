@@ -4,7 +4,6 @@ import 'package:nds_gui_kit/canvas/kits/paintable.dart';
 
 class AppText extends Paintable {
   AppText({
-    required this.canvas,
     required this.text,
     required this.position,
     required this.fontSize,
@@ -12,7 +11,6 @@ class AppText extends Paintable {
     this.onPressed,
   });
 
-  final Canvas canvas;
   final String text;
   final Offset position;
   final double fontSize;
@@ -25,7 +23,9 @@ class AppText extends Paintable {
       Rect.fromLTWH(position.dx, position.dy, text.length * 12, 12);
 
   @override
-  void draw() {
+  void draw(Canvas canvas, {Offset? parentPosition = Offset.zero}) {
+    final position = this.position + (parentPosition ?? Offset.zero);
+
     final textSpan = TextSpan(
       text: text,
       style: TextStyle(

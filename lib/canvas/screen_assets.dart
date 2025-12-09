@@ -43,6 +43,7 @@ class ScreenAssets {
       cache.loadImage('assets/images/button_light.png'),
       cache.loadImage('assets/images/button_settings.png'),
       cache.loadImage('assets/images/button_more_apps.png'),
+      cache.loadImage('assets/images/dialog.png'),
     ]);
 
     _instance = ScreenAssets._(
@@ -54,6 +55,7 @@ class ScreenAssets {
       buttonLight: results[5],
       buttonSettings: results[6],
       buttonMore: results[7],
+      dialog: results[8],
     );
   }
 
@@ -66,6 +68,7 @@ class ScreenAssets {
   final ui.Image buttonLight;
   final ui.Image buttonSettings;
   final ui.Image buttonMore;
+  final ui.Image dialog;
 
   const ScreenAssets._({
     required this.bgTile,
@@ -76,6 +79,7 @@ class ScreenAssets {
     required this.buttonLight,
     required this.buttonSettings,
     required this.buttonMore,
+    required this.dialog,
   });
 
   /// Get main button dimensions
