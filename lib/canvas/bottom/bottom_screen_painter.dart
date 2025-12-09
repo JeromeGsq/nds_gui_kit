@@ -10,7 +10,11 @@ Offset? touchPosition;
 bool overlayVisible = false;
 
 class BottomScreenPainter extends NDSCanvasPainter {
-  final _favoritesManager = FavoritesManager();
+  final Function(int)? onFavoriteButtonTap;
+
+  BottomScreenPainter({this.onFavoriteButtonTap});
+
+  final favoritesManager = FavoritesManager();
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -21,13 +25,13 @@ class BottomScreenPainter extends NDSCanvasPainter {
 
     BackgroundPainter.draw(canvas);
     BottomBarPainter.draw(canvas);
-    FavoriteButtonsPainter.draw(canvas);
+    FavoriteButtonsPainter.draw(canvas, favoritesManager, onFavoriteButtonTap);
   }
 
   @override
   void dispose() {
-    _favoritesManager.removeListener(notifyListeners);
-    _favoritesManager.dispose();
+    favoritesManager.removeListener(notifyListeners);
+    favoritesManager.dispose();
     super.dispose();
   }
 }

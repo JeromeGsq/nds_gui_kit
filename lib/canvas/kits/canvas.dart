@@ -167,12 +167,16 @@ abstract class NDSCanvasPainter extends ChangeNotifier {
           (rect.right - x).clamp(0, imgWidth),
           (rect.bottom - y).clamp(0, imgHeight),
         );
+
         final dstRect = Rect.fromLTWH(x, y, srcRect.width, srcRect.height);
+
         canvas.drawImageRect(
           image,
           srcRect,
           dstRect,
-          Paint()..filterQuality = FilterQuality.none,
+          Paint()
+            ..filterQuality = FilterQuality.none
+            ..isAntiAlias = false,
         );
       }
     }

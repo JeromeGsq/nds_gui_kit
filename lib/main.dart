@@ -25,7 +25,7 @@ void main() async {
     );
   }
 
-  runApp(const BottomDisplayView());
+  runApp(const TopDisplayView());
 }
 
 @pragma('vm:entry-point')

@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:installed_apps/app_info.dart';
-import 'package:nds_gui_kit/canvas/bottom/models/button_definition.dart';
+import 'package:installed_apps/installed_apps.dart';
 import 'package:nds_gui_kit/models/favorite_app_config.dart';
 import 'package:nds_gui_kit/services/favorites_storage_service.dart';
 
@@ -57,22 +57,17 @@ class FavoritesManager extends ChangeNotifier {
   }
 
   /// Configure a favorite button with an app
-  Future<void> configureButton(
-    int index,
-    AppInfo app,
-    List<ButtonDefinition> buttons,
-  ) async {
-    // Find the button definition to get its isLarge property
-    final button = buttons.firstWhere(
-      (b) => b.id == 'favorite_$index',
-      orElse: () => throw ArgumentError('Button not found: favorite_$index'),
-    );
+  Future<void> configureButton(int index, AppInfo app) async {
+    // Determine button size based on index
+    // Index 0 (top) and 3 (bottom) are large buttons
+    // Index 1 (left) and 2 (right) are small buttons
+    final isLarge = index == 0 || index == 3;
 
     final config = FavoriteAppConfig(
       packageName: app.packageName,
       appName: app.name,
       appIcon: app.icon,
-      isLarge: button.isLarge,
+      isLarge: isLarge,
     );
 
     await _storageService.saveFavorite(index, config);
@@ -84,6 +79,26 @@ class FavoritesManager extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  /// Launch the app at the given index
+  Future<void> launchApp(int index) async {
+    if (index < 0 || index >= _favorites.length) {
+      debugPrint('Invalid favorite index: $index');
+      return;
+    }
+
+    final favorite = _favorites[index];
+    if (!favorite.isConfigured || favorite.packageName == null) {
+      debugPrint('Favorite at index $index is not configured');
+      return;
+    }
+
+    try {
+      await InstalledApps.startApp(favorite.packageName!);
+    } catch (e) {
+      debugPrint('Failed to launch app ${favorite.packageName}: $e');
+    }
   }
 
   /// Get favorite at index
@@ -101,4 +116,3 @@ class FavoritesManager extends ChangeNotifier {
         _favorites[index].isConfigured;
   }
 }
-
