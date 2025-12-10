@@ -45,6 +45,7 @@ class _BottomScreenState extends State<BottomScreen> {
       home: Scaffold(
         backgroundColor: Colors.black,
         body: NDSPixelContainer(
+          size: const Size(256, 223),
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -52,21 +53,25 @@ class _BottomScreenState extends State<BottomScreen> {
               const NDSBackgroundBottom(),
 
               // Favorite buttons at exact pixel positions
-              Positioned(left: 34, top: 26, child: _buildFavoriteButton(0)),
-              Positioned(left: 34, top: 74, child: _buildFavoriteButton(1)),
-              Positioned(left: 130, top: 74, child: _buildFavoriteButton(2)),
-              Positioned(left: 34, top: 122, child: _buildFavoriteButton(3)),
+              Positioned(left: 34, top: 41.5, child: _buildFavoriteButton(0)),
+              Positioned(left: 34, top: 89.5, child: _buildFavoriteButton(1)),
+              Positioned(left: 130, top: 89.5, child: _buildFavoriteButton(2)),
+              Positioned(left: 34, top: 137.5, child: _buildFavoriteButton(3)),
 
               // Control buttons
               Positioned(
-                left: 6,
-                top: 171,
+                left: 22,
+                bottom: 1 + 8,
                 child: NDSLightButton(
                   onTap: () => setState(() => _overlayVisible = true),
                 ),
               ),
-              Positioned(left: 118, top: 171, child: const NDSSettingsButton()),
-              Positioned(left: 230, top: 171, child: const NDSMoreButton()),
+              Positioned(
+                left: 118,
+                bottom: 8,
+                child: const NDSSettingsButton(),
+              ),
+              Positioned(right: 21, bottom: 8, child: const NDSMoreButton()),
 
               // Black overlay
               if (_overlayVisible)

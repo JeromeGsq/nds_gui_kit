@@ -20,7 +20,7 @@ void main() async {
     );
   }
 
-  runApp(const TopScreen());
+  runApp(const BottomScreen());
 }
 
 @pragma('vm:entry-point')
