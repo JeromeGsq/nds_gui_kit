@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:installed_apps/app_info.dart';
@@ -17,14 +16,14 @@ class FavoritesManager extends ChangeNotifier {
     (_) => FavoriteAppConfig.empty(),
   );
 
-  /// Cache for app icons
-  final Map<String, ui.Image> _appIconCache = {};
+  /// Cache for app icons (MemoryImage for widget compatibility)
+  final Map<String, MemoryImage> _appIconCache = {};
 
   /// Get the list of favorites
   List<FavoriteAppConfig> get favorites => List.unmodifiable(_favorites);
 
   /// Get the app icon cache
-  Map<String, ui.Image> get appIconCache => _appIconCache;
+  Map<String, MemoryImage> get appIconCache => _appIconCache;
 
   /// Load all favorites from storage
   Future<void> loadFavorites() async {
@@ -42,14 +41,12 @@ class FavoritesManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Load and cache an app icon
+  /// Load and cache an app icon as MemoryImage
   Future<void> loadAppIcon(String packageName, Uint8List iconData) async {
     if (_appIconCache.containsKey(packageName)) return;
 
     try {
-      final codec = await ui.instantiateImageCodec(iconData);
-      final frame = await codec.getNextFrame();
-      _appIconCache[packageName] = frame.image;
+      _appIconCache[packageName] = MemoryImage(iconData);
     } catch (e) {
       // Ignore icon load errors
       debugPrint('Failed to load icon for $packageName: $e');

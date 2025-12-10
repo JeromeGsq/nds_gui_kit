@@ -19,7 +19,7 @@ class NDSTopBar extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 4),
+          padding: const EdgeInsets.only(left: 4, top: 3),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -42,6 +42,9 @@ class _Divider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ImagePP('assets/images/top_bar_divider.png');
+    return Transform.translate(
+      offset: Offset(0, -1),
+      child: ImagePP('assets/images/top_bar_divider.png'),
+    );
   }
 }

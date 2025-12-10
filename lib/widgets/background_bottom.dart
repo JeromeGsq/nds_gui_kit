@@ -8,7 +8,6 @@ class NDSBackgroundBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return ImagePP(
       'assets/images/bg_tile_bottom.png',
-      scale: 1.4,
       repeat: ImageRepeat.repeat,
     );
   }

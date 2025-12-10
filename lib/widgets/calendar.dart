@@ -133,28 +133,34 @@ class NDSCalendarState extends State<NDSCalendar> {
     Widget content = NDSText(text: day.toString(), color: textColor);
 
     if (isToday) {
-      return SizedBox(
-        width: _cellWidth,
-        height: _cellHeight,
-        child: Center(
-          child: Container(
-            width: 11,
-            height: 11,
-            decoration: BoxDecoration(
-              border: Border.all(color: const Color(0xFF0000FF), width: 1),
-              color: const Color.fromARGB(64, 0, 0, 255),
+      return Transform.translate(
+        offset: Offset(-0.5, 0.5),
+        child: SizedBox(
+          width: _cellWidth,
+          height: _cellHeight,
+          child: Center(
+            child: Container(
+              width: 11,
+              height: 11,
+              decoration: BoxDecoration(
+                border: Border.all(color: const Color(0xFF0000FF), width: 1),
+                color: const Color.fromARGB(64, 0, 0, 255),
+              ),
+              alignment: Alignment.center,
+              child: content,
             ),
-            alignment: Alignment.center,
-            child: content,
           ),
         ),
       );
     }
 
-    return SizedBox(
-      width: _cellWidth,
-      height: _cellHeight,
-      child: Center(child: content),
+    return Transform.translate(
+      offset: Offset(0, 2),
+      child: SizedBox(
+        width: _cellWidth,
+        height: _cellHeight,
+        child: Center(child: content),
+      ),
     );
   }
 }

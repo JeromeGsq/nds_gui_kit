@@ -54,30 +54,44 @@ class NDSBatteryState extends State<NDSBattery> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 4,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 2,
       children: [
         NDSText(text: '$_batteryLevel%'),
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned(
-              left: 0,
-              child: Container(
-                color: _colorLevel,
-                height: 2,
-                width: 12 * _batteryLevel / 100,
+        Transform.translate(
+          offset: Offset(0, -0.5),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              // Battery background
+              // Positioned(
+              //   left: 0,
+              //   child: Container(
+              //     color: Colors.black.withValues(alpha: 0.5),
+              //     height: 4,
+              //     width: 11,
+              //   ),
+              // ),
+              Positioned(
+                left: 0,
+                child: Container(
+                  color: _colorLevel,
+                  height: 2,
+                  width: 12 * _batteryLevel / 100,
+                ),
               ),
-            ),
-            Positioned(
-              left: 0,
-              child: Container(
-                color: _colorLevel,
-                height: 4,
-                width: 10 * _batteryLevel / 100,
+              Positioned(
+                left: 0,
+                child: Container(
+                  color: _colorLevel,
+                  height: 4,
+                  width: 10 * _batteryLevel / 100,
+                ),
               ),
-            ),
-            ImagePP('assets/images/battery.png'),
-          ],
+
+              ImagePP('assets/images/battery.png'),
+            ],
+          ),
         ),
       ],
     );
